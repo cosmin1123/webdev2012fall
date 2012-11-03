@@ -12,13 +12,14 @@ class TicTacToePlayer
                           [:c1, :b2, :a3]]
 
 	def initialize
-		@who_moves_next = 1		
+		@who_moves_next = 1	
+			
 		@owned_by_x     = []
 		@owned_by_zero  = []
  	end
   
 	def turn(input)
-		if @who_moves_next == 1
+		if @who_moves_next == 1 
 			@owned_by_x << (BOARD - @owned_by_x - @owned_by_zero).sample
     	else
 			@owned_by_zero << (BOARD - @owned_by_x - @owned_by_zero).sample
