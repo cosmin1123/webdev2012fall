@@ -26,6 +26,7 @@ class TicTacToePlayer
 		@owned_by_zero = input[:owned_by_zero]
 		WINNING_COMBINATIONS.each do |wcomb|
         	return "X wins" if (wcomb - @owned_by_x).empty?
+        	return "0 wins" if (wcomb - @owned_by_zero).empty?
 		end
 	
 		if @who_moves_next == 1 
@@ -97,6 +98,12 @@ def test_responds_to_turn
 		tttp = TicTacToePlayer.new
 
 		assert_equal(tttp.turn({:owned_by_x => [:b1,:b2,:b3], :owned_by_zero => []}), "X wins")
+	end
+	
+	def test_game_zero_wins
+		tttp = TicTacToePlayer.new
+
+		assert_equal(tttp.turn({:owned_by_x => [], :owned_by_zero => [:b1,:b2,:b3]}), "0 wins")
 	end
 
 end
