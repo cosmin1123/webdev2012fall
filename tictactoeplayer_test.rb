@@ -22,6 +22,7 @@ class TicTacToePlayer
 		if( input.class!=Hash || input[:owned_by_x].class != Array)
 			return "Declarare gresita. Introdu Hash"
 		end
+		if(input[:owned_by_x].length + 
 		@owned_by_x = input[:owned_by_x]
 		@owned_by_zero = input[:owned_by_zero]
 		WINNING_COMBINATIONS.each do |wcomb|
@@ -29,6 +30,7 @@ class TicTacToePlayer
         	return "X wins" if (wcomb - @owned_by_x).empty?
         	return "0 wins" if (wcomb - @owned_by_zero).empty?
 		end
+	
 	
 		if @who_moves_next == 1 
 			@owned_by_x << (BOARD - @owned_by_x - @owned_by_zero).sample
