@@ -1,7 +1,7 @@
 require 'test/unit'
 
 class TicTacToePlayer
-	def turn()
+	def turn(input)
 	
 	end
 end
