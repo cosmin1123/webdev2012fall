@@ -37,6 +37,17 @@ def test_responds_to_turn
 	  		tttp.turn ({:owned_by_x => nil, :owned_by_zero => nil})
 	  	end
 	end	
+	
+	def assert_not_nil(exp, msg=nil)
+  		msg = message(msg) { "<#{mu_pp(exp)}> expected to not be nil" }
+  		assert(!exp.nil?, msg)
+	end
+	
+	def test_turn_not_nil
+		tttp = TicTacToePlayer.new
+	  	
+		assert_not_nil(tttp.turn "Saaad")
+	end
 
 end
 
