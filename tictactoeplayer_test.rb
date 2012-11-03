@@ -17,7 +17,7 @@ def test_responds_to_turn
     assert_respond_to( tttp, :turn, failure_message = "An instance of TicTacToePlayer does not respond to turn" )
   end
   
-  def test_responds_to_argument
+  def test_does_not_raise_exception_to_argument
   	assert_nothing_raised  do
   		tttp = TicTacToePlayer.new
   		tttp.turn :asd
