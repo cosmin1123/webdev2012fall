@@ -19,6 +19,7 @@ class TicTacToePlayer
  	end
   
 	def turn(input)
+	
 		if( input.class!=Hash || input[:owned_by_x].class != Array)
 			return "Declarare gresita. Introdu Hash"
 		end
