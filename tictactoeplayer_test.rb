@@ -19,13 +19,29 @@ class TicTacToePlayer
  	end
   
 	def turn(input)
+		if( input.class!=Hash || input[:owned_by_x].class != Array)
+			return "Declarare gresita. Introdu Hash"
+		end
+		@owned_by_x = input[:owned_by_x]
+		@owned_by_zero = input[:owned_by_zero]
+		WINNING_COMBINATIONS.each do |wcomb|
+        	return "X wins" if (wcomb - @owned_by_x).empty?
+		end
+	
 		if @who_moves_next == 1 
 			@owned_by_x << (BOARD - @owned_by_x - @owned_by_zero).sample
+			input = {:owned_by_x => @owned_by_x, :owned_by_zero => @owned_by_zero}
+			return 	input
     	else
 			@owned_by_zero << (BOARD - @owned_by_x - @owned_by_zero).sample
+			input = {:owned_by_x => @owned_by_x, :owned_by_zero => @owned_by_zero}	
+			return input
 		end
-		@who_moves_next = 0
-		return {:owned_by_x => @owned_by_x, :owned_by_zero => @owned_by_zero}	
+		@who_moves_next = 1 - @who_moves_next
+		
+   
+    
+		
 	end
 end
 
@@ -41,21 +57,21 @@ def test_responds_to_turn
   end
   
   	def test_does_not_raise_exception_to_argument
-	  	assert_nothing_raised  do
+	  	assert_nothing_raised(ArgumentError)  do
 	  		tttp = TicTacToePlayer.new
 	  		tttp.turn :asd
 	  	end
 	end
 
 	def test_does_not_raise_exception_to_hash
-	  	assert_nothing_raised  do
+	  	assert_nothing_raised(ArgumentError) do
 	  		tttp = TicTacToePlayer.new
 	  		tttp.turn ({:asd => [4,3,5], :sad => [1,2,3]})
 	  	end
 	end	
 	
 	def test_does_not_raise_exception_to_input
-	  	assert_nothing_raised  do
+	  	assert_nothing_raised(ArgumentError)  do
 	  		tttp = TicTacToePlayer.new
 	  		tttp.turn ({:owned_by_x => nil, :owned_by_zero => nil})
 	  	end
@@ -79,7 +95,8 @@ def test_responds_to_turn
 	
 	def test_game_X_wins
 		tttp = TicTacToePlayer.new
-		assert_equal(tttp.turn({:owned_by_x => [:a1,:a2,:a3], :owned_by_zero => []}), "X wins")
+
+		assert_equal(tttp.turn({:owned_by_x => [:b1,:b2,:b3], :owned_by_zero => []}), "X wins")
 	end
 
 end
