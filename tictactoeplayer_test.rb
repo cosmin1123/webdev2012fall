@@ -26,7 +26,14 @@ def test_responds_to_turn
 	def test_does_not_raise_exception_to_hash
 	  	assert_nothing_raised  do
 	  		tttp = TicTacToePlayer.new
-	  		tttp.turn ({:owned_by_x => [], :owned_by_zero => []})
+	  		tttp.turn ({:asd => [4,3,5], :sad => [1,2,3]})
+	  	end
+	end	
+	
+	def test_does_not_raise_exception_to_input
+	  	assert_nothing_raised  do
+	  		tttp = TicTacToePlayer.new
+	  		tttp.turn ({:owned_by_x => nil, :owned_by_zero => nil})
 	  	end
 	end	
 
