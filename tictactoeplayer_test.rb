@@ -26,6 +26,7 @@ class TicTacToePlayer
 		@owned_by_zero = input[:owned_by_zero]
 		WINNING_COMBINATIONS.each do |wcomb|
         	return "X wins" if (wcomb - @owned_by_x).empty?
+        	
         	return "0 wins" if (wcomb - @owned_by_zero).empty?
 		end
 	
