@@ -22,7 +22,9 @@ class TicTacToePlayer
 		if( input.class!=Hash || input[:owned_by_x].class != Array)
 			return "Declarare gresita. Introdu Hash"
 		end
-		if(input[:owned_by_x].length + 
+		if(input[:owned_by_x].length + input[:owned_by_zero].length >= 9)
+			return "Tie"
+		end
 		@owned_by_x = input[:owned_by_x]
 		@owned_by_zero = input[:owned_by_zero]
 		WINNING_COMBINATIONS.each do |wcomb|
