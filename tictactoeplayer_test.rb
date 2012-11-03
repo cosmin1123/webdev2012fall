@@ -19,11 +19,12 @@ class TicTacToePlayer
   
 	def turn(input)
 		if @who_moves_next == 1
-			return	@owned_by_x << (BOARD - @owned_by_x - @owned_by_zero).sample
+			@owned_by_x << (BOARD - @owned_by_x - @owned_by_zero).sample
     	else
 			@owned_by_zero << (BOARD - @owned_by_x - @owned_by_zero).sample
 		end
-		@who_moves_next = 0		
+		@who_moves_next = 0
+		return {:owned_by_x => @owned_by_x, :owned_by_zero => @owned_by_zero}	
 	end
 end
 
@@ -69,6 +70,12 @@ def test_responds_to_turn
 	  	
 		assert_not_nil(tttp.turn "Saaad")
 	end
+	
+	def test_turn_returns_keys
+		tttp = TicTacToePlayer.new
+	  	
+		assert_equal(tttp.turn({:owned_by_x => [], :owned_by_zero => []}).keys, [:owned_by_x, :owned_by_zero])
+	end		
 
 end
 
