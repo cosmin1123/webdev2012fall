@@ -74,8 +74,7 @@ def test_responds_to_turn
 	
 	def test_turn_returns_keys
 		tttp = TicTacToePlayer.new
-	  	
-		assert_equal(tttp.turn({:owned_by_x => [], :owned_by_zero => []}).keys, [:owned_by_x, :owned_by_zero])
+	  	assert_equal(tttp.turn({:owned_by_x => [], :owned_by_zero => []}).keys, [:owned_by_x, :owned_by_zero])
 	end		
 
 end
