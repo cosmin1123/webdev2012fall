@@ -19,6 +19,7 @@ class TicTacToePlayer
  	end
   
 	def turn(input)
+	
 		if @who_moves_next == 1 
 			@owned_by_x << (BOARD - @owned_by_x - @owned_by_zero).sample
     	else
