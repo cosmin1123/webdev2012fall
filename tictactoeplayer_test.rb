@@ -19,7 +19,6 @@ class TicTacToePlayer
  	end
   
 	def turn(input)
-	
 		if @who_moves_next == 1 
 			@owned_by_x << (BOARD - @owned_by_x - @owned_by_zero).sample
     	else
@@ -77,6 +76,11 @@ def test_responds_to_turn
 		tttp = TicTacToePlayer.new
 	  	assert_equal(tttp.turn({:owned_by_x => [], :owned_by_zero => []}).keys, [:owned_by_x, :owned_by_zero])
 	end		
+	
+	def test_game_X_wins
+		tttp = TicTacToePlayer.new
+		assert_equal(tttp.turn({:owned_by_x => [:a1,:a2,:a3], :owned_by_zero => []}), "X wins")
+	end
 
 end
 
