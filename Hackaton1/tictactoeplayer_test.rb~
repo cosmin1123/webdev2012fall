@@ -1,0 +1,128 @@
+require 'test/unit'
+
+class TicTacToePlayer
+	BOARD = [:a1, :a2, :a3, :b1, :b2, :b3, :c1, :c2, :c3]
+	WINNING_COMBINATIONS = [[:a1, :a2, :a3],
+                          [:b1, :b2, :b3],
+                          [:c1, :c2, :c3],
+                          [:a1, :b1, :c1],
+                          [:a2, :b2, :c2],
+                          [:a3, :b3, :c3],
+                          [:a1, :b2, :c3],
+                          [:c1, :b2, :a3]]
+
+	def initialize(a)
+		if(a=="X")
+			@who_moves_next = 1
+		else
+			@who_moves_next = 0	
+			
+		@owned_by_x     = []
+		@owned_by_zero  = []
+ 	end
+  
+	def turn(input)
+	
+		if( input.class!=Hash || input[:owned_by_x].class != Array)
+			return "Declarare gresita. Introdu Hash"
+		end
+		if(input[:owned_by_x].length + input[:owned_by_zero].length >= 9)
+			return "Tie"
+		end
+		@owned_by_x = input[:owned_by_x]
+		@owned_by_zero = input[:owned_by_zero]
+		WINNING_COMBINATIONS.each do |wcomb|
+			input = nil
+        	return "X wins" if (wcomb - @owned_by_x).empty?
+        	return "0 wins" if (wcomb - @owned_by_zero).empty?
+		end
+	
+		if @who_moves_next == 1 
+			@owned_by_x << (BOARD - @owned_by_x - @owned_by_zero).sample
+			input = {:owned_by_x => @owned_by_x, :owned_by_zero => @owned_by_zero}
+
+			return 	input
+    	else
+			@owned_by_zero << (BOARD - @owned_by_x - @owned_by_zero).sample
+			input = {:owned_by_x => @owned_by_x, :owned_by_zero => @owned_by_zero}
+
+			return input
+		end
+
+		
+   
+    
+		
+	end
+end
+
+class TestPlayer < Test::Unit::TestCase
+  def test_truthiness
+    functionality_implemented = true
+    assert( functionality_implemented, failure_message = "Functionality not implemented" )
+  end
+
+def test_responds_to_turn
+    tttp = TicTacToePlayer.new "X"
+    assert_respond_to( tttp, :turn, failure_message = "An instance of TicTacToePlayer does not respond to turn" )
+  end
+  
+  	def test_does_not_raise_exception_to_argument
+	  	assert_nothing_raised(ArgumentError)  do
+	  		tttp = TicTacToePlayer.new "X"
+	  		tttp.turn :asd
+	  	end
+	end
+
+	def test_does_not_raise_exception_to_hash
+	  	assert_nothing_raised(ArgumentError) do
+	  		tttp = TicTacToePlayer.new "X"
+	  		tttp.turn ({:asd => [4,3,5], :sad => [1,2,3]})
+	  	end
+	end	
+	
+	def test_does_not_raise_exception_to_input
+	  	assert_nothing_raised(ArgumentError)  do
+	  		tttp = TicTacToePlayer.new "X"
+	  		tttp.turn ({:owned_by_x => nil, :owned_by_zero => nil})
+	  	end
+	end	
+	
+	def assert_not_nil(exp, msg=nil)
+  		msg = message(msg) { "<#{mu_pp(exp)}> expected to not be nil" }
+  		assert(!exp.nil?, msg)
+	end
+	
+	def test_turn_not_nil
+		tttp = TicTacToePlayer.new "X"
+	  	
+		assert_not_nil(tttp.turn "Saaad")
+	end
+	
+	def test_turn_returns_keys
+		tttp = TicTacToePlayer.new "X"
+	  	assert_equal(tttp.turn({:owned_by_x => [], :owned_by_zero => []}).keys, [:owned_by_x, :owned_by_zero])
+	end		
+	
+	def test_game_X_wins
+		tttp = TicTacToePlayer.new "X"
+
+		assert_equal(tttp.turn({:owned_by_x => [:b1,:b2,:b3], :owned_by_zero => []}), "X wins")
+	end
+	
+	def test_game_zero_wins
+		tttp = TicTacToePlayer.new "X"
+
+		assert_equal(tttp.turn({:owned_by_x => [], :owned_by_zero => [:b1,:b2,:b3]}), "0 wins")
+	end
+	
+	def test_game_tie
+				tttp = TicTacToePlayer.new "X"
+
+		assert_equal(tttp.turn({:owned_by_x => [:a1,:a1,:a1,:a3,:a1], :owned_by_zero => [:c3,:b1,:a1,:a1]}), "Tie")
+	end
+
+end
+
+
+
